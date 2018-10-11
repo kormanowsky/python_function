@@ -94,18 +94,7 @@ class Function:
                 args.append(e)
             else:
                 _kwargs[i] = e
-        try:
-            return self._callback(self.fn(*args, **_kwargs))
-        except TypeError as error:
-            if error.message.find("argument") != -1:
-                _args = list()
-                for i in range(int(error.message.split()[3])):
-                    try:
-                        _args.append(args[i])
-                    except ReferenceError:
-                        raise
-                return self._callback(self.fn(*_args, **dict()))
-            raise
+        return self._callback(self.fn(*args, **_kwargs))
 
     # usual call (function())
     def __call__(self, *args, **kwargs):
